@@ -13,10 +13,15 @@ const FormArea = () => {
       className={classes.container}
     >
       <div className={classes.textBox}>
-        <Typography component="h1" variant="h6" className={classes.title}>
+        <Typography
+          align="center"
+          component="h1"
+          variant="h6"
+          className={classes.title}
+        >
           Criar meu cadastro
         </Typography>
-        <Typography>
+        <Typography align="center">
           Para acompanhar sua contratação de crédito você utilizará seu e-mail e
           CPF.
         </Typography>

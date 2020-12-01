@@ -21,7 +21,7 @@ const Form = () => {
     password: '',
     privacyPolicy: false
   }
-  const { register, handleSubmit, control } = useForm({ defaultValues })
+  const { register, handleSubmit, control, errors } = useForm({ defaultValues })
   const classes = useStyles()
 
   const [passwordIsVisible, setPasswordIsVisible] = useState(false)
@@ -31,30 +31,46 @@ const Form = () => {
       <TextField
         variant="outlined"
         margin="normal"
-        inputRef={register}
         required
+        error={errors?.email?.type === 'pattern'}
+        inputRef={register({
+          required: true,
+          pattern: { value: /^\S+@\S+$/i, message: 'Email inválido' }
+        })}
         fullWidth
         label="E-mail"
         name="email"
         autoComplete="email"
         placeholder="email@domínio.com"
         autoFocus
+        helperText={errors?.email?.message ?? ''}
       />
       <TextField
         variant="outlined"
         margin="normal"
-        inputRef={register}
         required
+        error={errors?.cpf?.type === 'pattern'}
+        inputRef={register({
+          required: true,
+          pattern: {
+            value: /^\d{3}\.\d{3}\.\d{3}-\d{2}$/i,
+            message: 'CPF Incorreto'
+          }
+        })}
         fullWidth
         name="cpf"
         label="CPF"
         autoComplete="cpf"
+        helperText={errors?.cpf?.message ?? ''}
       />
       <TextField
         variant="outlined"
         margin="normal"
-        inputRef={register}
         required
+        inputRef={register({
+          required: true
+          // pattern: /^\d{2}\/\d{2}\/\d{4}$/i
+        })}
         fullWidth
         label="Data de nascimento"
         name="birthday"
@@ -68,8 +84,8 @@ const Form = () => {
       <TextField
         variant="outlined"
         margin="normal"
-        inputRef={register}
         required
+        inputRef={register({ required: true })}
         fullWidth
         name="password"
         label="Senha"
@@ -92,6 +108,7 @@ const Form = () => {
         <FormControlLabel
           control={
             <Checkbox
+              color="primary"
               rules={{ required: true }}
               control={control}
               type="checkbox"
@@ -100,7 +117,7 @@ const Form = () => {
             />
           }
           label={
-            <Typography>
+            <Typography variant="caption">
               Li e estou de acordo com a{' '}
               <Link href="#">Política de Privacidade</Link> e a{' '}
               <Link href="#">Política de Uso de Informações</Link>.
