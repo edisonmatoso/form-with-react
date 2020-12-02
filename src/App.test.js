@@ -24,7 +24,7 @@ describe('App component', () => {
     expect(coverText).not.toBeInTheDocument()
   })
 
-  it.only('should show a success message when the form is sent successfully', async () => {
+  it('should show a success message when the form is sent successfully', async () => {
     const isMobile = true
     const { container } = createComponent(isMobile)
 
