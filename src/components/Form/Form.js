@@ -11,9 +11,11 @@ import {
   FormControlLabel
 } from '@material-ui/core'
 import { Visibility, VisibilityOff, Lock } from '@material-ui/icons/'
+import PropTypes from 'prop-types'
 import useStyles from './Form.styles'
+import FormGroup from '../FormGroup'
 
-const Form = () => {
+const Form = ({ handleIsValid }) => {
   const defaultValues = {
     email: '',
     cpf: '',
@@ -26,8 +28,13 @@ const Form = () => {
 
   const [passwordIsVisible, setPasswordIsVisible] = useState(false)
 
+  const handleOnSubmit = (data) => {
+    Object.keys(errors).length === 0 && handleIsValid()
+    console.log(data)
+  }
+
   return (
-    <form onSubmit={handleSubmit((data) => console.log(data))}>
+    <form onSubmit={handleSubmit((data) => handleOnSubmit(data))}>
       <TextField
         variant="outlined"
         margin="normal"
@@ -45,42 +52,42 @@ const Form = () => {
         autoFocus
         helperText={errors?.email?.message ?? ''}
       />
-      <TextField
-        variant="outlined"
-        margin="normal"
-        required
-        error={errors?.cpf?.type === 'pattern'}
-        inputRef={register({
-          required: true,
-          pattern: {
-            value: /^\d{3}\.\d{3}\.\d{3}-\d{2}$/i,
-            message: 'CPF Incorreto'
-          }
-        })}
-        fullWidth
-        name="cpf"
-        label="CPF"
-        autoComplete="cpf"
-        helperText={errors?.cpf?.message ?? ''}
-      />
-      <TextField
-        variant="outlined"
-        margin="normal"
-        required
-        inputRef={register({
-          required: true
-          // pattern: /^\d{2}\/\d{2}\/\d{4}$/i
-        })}
-        fullWidth
-        label="Data de nascimento"
-        name="birthday"
-        autoComplete="dataNascimento"
-        type="date"
-        autoFocus
-        InputLabelProps={{
-          shrink: true
-        }}
-      />
+      <FormGroup>
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          error={errors?.cpf?.type === 'pattern'}
+          inputRef={register({
+            required: true,
+            pattern: {
+              value: /^\d{3}\.\d{3}\.\d{3}-\d{2}$/i,
+              message: 'CPF Incorreto'
+            }
+          })}
+          name="cpf"
+          label="CPF"
+          autoComplete="cpf"
+          helperText={errors?.cpf?.message ?? ''}
+        />
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          inputRef={register({
+            required: true
+            // pattern: /^\d{2}\/\d{2}\/\d{4}$/i
+          })}
+          label="Data de nascimento"
+          name="birthday"
+          autoComplete="dataNascimento"
+          type="date"
+          autoFocus
+          InputLabelProps={{
+            shrink: true
+          }}
+        />
+      </FormGroup>
       <TextField
         variant="outlined"
         margin="normal"
@@ -139,6 +146,10 @@ const Form = () => {
       </Button>
     </form>
   )
+}
+
+Form.propTypes = {
+  handleIsValid: PropTypes.func.isRequired
 }
 
 export default Form

@@ -3,6 +3,12 @@ body {
   font-family: Arial Rounded MT Bold, Helvetica Rounded, Arial, sans-serif;
 }
 
+html,
+body,
+#root {
+  height: 100%;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
