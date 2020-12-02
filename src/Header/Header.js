@@ -10,7 +10,9 @@ const Header = ({ isValid }) => {
   return (
     <header className={classes.header}>
       {isValid ? (
-        <Typography>Parabéns! Cadastro realizado com sucesso!</Typography>
+        <Typography data-testid="successMessage">
+          Parabéns! Cadastro realizado com sucesso!
+        </Typography>
       ) : (
         <img src={logo} alt="logo" />
       )}

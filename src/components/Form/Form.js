@@ -75,14 +75,18 @@ const Form = ({ handleIsValid }) => {
           margin="normal"
           required
           inputRef={register({
-            required: true
-            // pattern: /^\d{2}\/\d{2}\/\d{4}$/i
+            required: true,
+            pattern: {
+              value: /^\d{4}-\d{2}-\d{2}$/i,
+              message: 'Data incorreta'
+            }
           })}
           label="Data de nascimento"
           name="birthday"
           autoComplete="dataNascimento"
           type="date"
           autoFocus
+          helperText={errors?.birthday?.message ?? ''}
           InputLabelProps={{
             shrink: true
           }}
@@ -141,6 +145,7 @@ const Form = ({ handleIsValid }) => {
         size="large"
         className={classes.button}
         type="submit"
+        data-testid="submitButton"
       >
         Cadastrar
       </Button>
